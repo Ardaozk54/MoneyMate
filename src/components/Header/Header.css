@@ -1,0 +1,85 @@
+.header {
+  width: 100%;
+  background: var(--surface);
+
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1200px;
+  height: 72px;
+
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===========================
+   Logo
+=========================== */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+}
+
+.logo-icon {
+  font-size: 28px;
+  color: var(--primary);
+}
+
+.logo-text {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+/* ===========================
+   Navigation
+=========================== */
+
+.navigationContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+
+  padding: 10px 16px;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.active {
+  background: var(--primary-light);
+  color: var(--primary);
+
+  font-weight: 700;
+}
