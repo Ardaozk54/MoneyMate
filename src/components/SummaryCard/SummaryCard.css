@@ -1,0 +1,37 @@
+.summary-card {
+  flex: 1;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  padding: 24px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow:0 12px 24px rgba(15,23,42,.08);
+  
+}
+
+.summary-title {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+
+  margin-bottom: 10px;
+}
+
+.summary-amount {
+  color: var(--text);
+
+  font-size: 28px;
+
+  font-weight: 700;
+}

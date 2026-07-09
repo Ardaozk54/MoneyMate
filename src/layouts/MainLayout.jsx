@@ -8,7 +8,7 @@ function MainLayout() {
     <>
     <Header/>
     <Outlet/>
-    <Footer/>
+    {/* <Footer/> */}
     </>
   )
 }

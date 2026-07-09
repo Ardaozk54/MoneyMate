@@ -1,0 +1,47 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  color: var(--text);
+}
+
+.dashboard-header p {
+  margin-top: 8px;
+  color: var(--text-secondary);
+}
+
+.summary-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.transaction-list {
+  margin-top: 40px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden;
+}
+
+.transaction-title {
+  padding: 20px 24px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  border-bottom: 1px solid var(--border);
+}

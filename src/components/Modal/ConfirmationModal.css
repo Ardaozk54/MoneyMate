@@ -1,0 +1,156 @@
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.45);
+
+  backdrop-filter: blur(6px);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal {
+  width: 100%;
+
+  max-width: 520px;
+
+  background: white;
+
+  border-radius: var(--radius-lg);
+
+  padding: 32px;
+
+  box-shadow: 0 25px 50px rgba(15, 23, 42, 0.25);
+
+  animation: modalFade 0.25s ease;
+}
+
+.modal h2 {
+  margin-bottom: 8px;
+
+  color: var(--text);
+}
+
+.modal-subtitle {
+  color: var(--text-secondary);
+
+  margin-bottom: 24px;
+}
+
+.modal-content {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  margin-bottom: 24px;
+}
+
+.modal-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 16px;
+
+  border-radius: var(--radius-md);
+
+  background: var(--background);
+}
+
+.modal-row span {
+  color: var(--text-secondary);
+}
+
+.modal-row strong {
+  color: var(--text);
+}
+
+.modal-row .income {
+  color: var(--success);
+}
+
+.modal-row .expense {
+  color: var(--danger);
+}
+
+.modal-warning {
+  background: #fef3c7;
+
+  color: #92400e;
+
+  border-radius: var(--radius-md);
+
+  padding: 14px 16px;
+
+  font-size: 0.9rem;
+
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  border: none;
+
+  padding: 12px 22px;
+
+  border-radius: var(--radius-md);
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.cancel-btn {
+  background: #e2e8f0;
+
+  color: var(--text);
+}
+
+.cancel-btn:hover {
+  background: #cbd5e1;
+}
+
+.confirm-btn {
+  background: var(--primary);
+
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: var(--primary-dark);
+}
+
+@keyframes modalFade {
+  from {
+    opacity: 0;
+
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
