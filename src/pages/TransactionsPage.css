@@ -1,0 +1,35 @@
+.transactions-page {
+  max-width: 1200px;
+
+  margin: 48px auto;
+
+  padding: 0 24px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+
+  color: var(--text);
+
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: var(--text-secondary);
+}
+
+.transactions-container {
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-lg);
+
+  padding: 24px;
+
+  box-shadow: var(--shadow-md);
+}

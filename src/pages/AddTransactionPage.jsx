@@ -4,6 +4,7 @@ import { categories } from "../constants/categories";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { initialFormData } from "../constants/initialFormData";
+import { toast } from "sonner";
 function AddTransactionPage({ setTransactions }) {
   const navigate = useNavigate();
 
@@ -40,10 +41,15 @@ function AddTransactionPage({ setTransactions }) {
   function handleChange(e) {
     const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   }
 
   function handleConfirm() {
@@ -68,6 +74,8 @@ function AddTransactionPage({ setTransactions }) {
     setErrors({});
 
     setFormData(initialFormData);
+
+    toast.success("Transaction added successfully!");
 
     navigate("/");
   }
@@ -100,7 +108,9 @@ function AddTransactionPage({ setTransactions }) {
               placeholder="Netflix Subscription"
               value={formData.title}
               onChange={handleChange}
+              className={errors.title ? "input-error" : ""}
             />
+            {errors.title && <p className="error-message">{errors.title}</p>}
           </div>
 
           {/* Category */}
@@ -112,6 +122,7 @@ function AddTransactionPage({ setTransactions }) {
               name="category"
               value={formData.category}
               onChange={handleChange}
+              className={errors.category ? "input-error" : ""}
             >
               <option value="">Select Category</option>
 
@@ -121,6 +132,10 @@ function AddTransactionPage({ setTransactions }) {
                 </option>
               ))}
             </select>
+
+            {errors.category && (
+              <p className="error-message">{errors.category}</p>
+            )}
           </div>
 
           {/* Amount */}
@@ -137,8 +152,11 @@ function AddTransactionPage({ setTransactions }) {
                 placeholder="0"
                 value={formData.amount}
                 onChange={handleChange}
+                className={errors.amount ? "input-error" : ""}
               />
             </div>
+
+            {errors.amount && <p className="error-message">{errors.amount}</p>}
           </div>
 
           {/* Type */}
@@ -166,7 +184,10 @@ function AddTransactionPage({ setTransactions }) {
               name="date"
               value={formData.date}
               onChange={handleChange}
+              className={errors.date ? "input-error" : ""}
             />
+
+            {errors.date && <p className="error-message">{errors.date}</p>}
           </div>
 
           <button className="submit-btn" type="submit">

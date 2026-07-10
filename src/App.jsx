@@ -9,32 +9,40 @@ import TransactionsPage from "./pages/TransactionsPage";
 import AddTransactionPage from "./pages/AddTransactionPage";
 
 import { mockTransactions } from "./data/mockTransactions";
+import { Toaster } from "sonner";
 
 function App() {
   const [transactions, setTransactions] = useState(mockTransactions);
   console.log("App çalıştı");
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route
-          path="/"
-          element={<DashboardPage transactions={transactions} />}
-        />
-        <Route path="/transactions" element={<TransactionsPage />} />
-        <Route
-          path="/add-transactions"
-          element={
-            <AddTransactionPage
-              transactions={transactions}
-              setTransactions={setTransactions}
-            />
-          }
-        />
-      </Route>
+    <>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route
+            path="/"
+            element={<DashboardPage transactions={transactions} />}
+          />
+          <Route
+            path="/transactions"
+            element={<TransactionsPage transactions={transactions} />}
+          />
+          <Route
+            path="/add-transactions"
+            element={
+              <AddTransactionPage
+                transactions={transactions}
+                setTransactions={setTransactions}
+              />
+            }
+          />
+        </Route>
 
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-    </Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+
+      <Toaster richColors position="top-right" />
+    </>
   );
 }
 

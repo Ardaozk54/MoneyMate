@@ -8,6 +8,8 @@
   border-bottom: 1px solid var(--border);
 
   transition: var(--transition);
+
+  transition: background 0.2s;
 }
 
 .transaction-item:last-child {
@@ -16,6 +18,7 @@
 
 .transaction-item:hover {
   background: var(--background);
+  border-radius: 14px;
 }
 
 .transaction-info h3 {
@@ -35,7 +38,6 @@
 }
 
 .transaction-meta h3 {
-  
   font-size: 18px;
 
   margin-bottom: 4px;

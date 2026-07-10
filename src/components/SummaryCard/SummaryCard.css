@@ -16,8 +16,7 @@
 
 .summary-card:hover {
   transform: translateY(-3px);
-  box-shadow:0 12px 24px rgba(15,23,42,.08);
-  
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
 .summary-title {
@@ -34,4 +33,12 @@
   font-size: 28px;
 
   font-weight: 700;
+}
+
+.summary-amount.income {
+  color: var(--success);
+}
+
+.summary-amount.expense {
+  color: var(--danger);
 }

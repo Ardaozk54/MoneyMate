@@ -7,6 +7,9 @@ import {
   calculateExpense,
   calculateBalance,
 } from "../utils/finance";
+
+import TransactionList from "../components/Transaction/TransactionList";
+
 function DashboardPage({ transactions }) {
   const income = calculateIncome(transactions);
   const expense = calculateExpense(transactions);
@@ -22,23 +25,14 @@ function DashboardPage({ transactions }) {
 
       <div className="summary-cards">
         <SummaryCard title="Balance" amount={balance} />
-        <SummaryCard title="Income" amount={income} />
-        <SummaryCard title="Expense" amount={expense} />
+        <SummaryCard title="Income" amount={income} type="income" />
+        <SummaryCard title="Expense" amount={expense} type="expense" />
       </div>
 
       <section className="transaction-list">
         <h2 className="transaction-title">Recent Transactions</h2>
 
-        {transactions.map((transaction) => (
-          <TransactionItem
-            key={transaction.id}
-            title={transaction.title}
-            category={transaction.category}
-            amount={transaction.amount}
-            type={transaction.type}
-            date={transaction.date}
-          />
-        ))}
+        <TransactionList transactions={transactions.slice(0, 5)} />
       </section>
     </main>
   );
