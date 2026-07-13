@@ -173,3 +173,31 @@
 .input-error {
   border: 1px solid #dc2626 !important;
 }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-bottom: 20px;
+
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  transform: translateX(-2px);
+}
+
+.back-link svg {
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover svg {
+  transform: translateX(-2px);
+}

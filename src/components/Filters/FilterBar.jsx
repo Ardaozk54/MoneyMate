@@ -23,7 +23,7 @@ function FilterBar({
         <option value="ALL">All Categories</option>
 
         {categories.map((category) => (
-          <option key={category.label} value={category.label}>
+          <option key={category.value} value={category.value}>
             {category.label}
           </option>
         ))}

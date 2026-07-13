@@ -1,5 +1,7 @@
 import "./TransactionItem.css";
+import { categories } from "../../constants/categories";
 import { Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 
 function TransactionItem({
   title,
@@ -9,12 +11,15 @@ function TransactionItem({
   date,
   id,
   onDelete,
+  onEdit,
 }) {
+  const categoryLabel =
+    categories.find((c) => c.value === category)?.label || category;
   return (
     <div className="transaction-item">
       <div className="transaction-info">
         <h3>{title}</h3>
-        <p>{category}</p>
+        <p>{categoryLabel}</p>
       </div>
 
       <div className="transaction-meta">
@@ -24,11 +29,19 @@ function TransactionItem({
         <p>{date}</p>
       </div>
 
-      {onDelete && (
-        <button className="delete-btn" onClick={() => onDelete(id)}>
-          <Trash2 size={18} />
-        </button>
-      )}
+      <div className="transaction-actions">
+        {onEdit && (
+          <button className="edit-btn" onClick={() => onEdit(id)}>
+            <Pencil size={17} strokeWidth={2.2} />
+          </button>
+        )}
+
+        {onDelete && (
+          <button className="delete-btn" onClick={() => onDelete(id)}>
+            <Trash2 size={17} strokeWidth={2.2} />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

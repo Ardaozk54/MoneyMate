@@ -1,19 +1,14 @@
 .transaction-item {
   display: grid;
-
   grid-template-columns: 1fr auto auto;
-  justify-content: space-between;
   align-items: center;
 
   padding: 18px 24px;
+  gap: 20px;
 
   border-bottom: 1px solid var(--border);
 
-  transition: var(--transition);
-
-  gap: 32px;
-
-  transition: background 0.2s;
+  transition: background 0.2s ease;
 }
 
 .transaction-item:last-child {
@@ -26,43 +21,40 @@
 }
 
 .transaction-info h3 {
-  font-size: 16px;
-  color: var(--text);
-
   margin-bottom: 4px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  color: var(--text);
 }
 
 .transaction-info p {
-  color: var(--text-secondary);
   font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .transaction-meta {
   display: flex;
-
   flex-direction: column;
-
   align-items: flex-end;
 
   min-width: 120px;
 
-  gap: 4px;
+  gap: 6px;
 }
 
 .transaction-meta h3 {
-  font-size: 1.2rem;
-
+  font-size: 1.3rem;
   font-weight: 700;
-
   line-height: 1;
 }
 
 .transaction-meta p {
-  font-size: 0.9rem;
-
-  color: var(--text-secondary);
-
   margin: 0;
+
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
 .transaction-amount-income {
@@ -73,18 +65,53 @@
   color: var(--danger);
 }
 
-.delete-btn {
-  border: none;
+/* ---------- ACTIONS ---------- */
 
-  background: none;
+.transaction-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: #fff;
 
   cursor: pointer;
 
-  color: #94a3b8;
+  transition: all 0.2s ease;
+}
 
-  transition: 0.2s;
+.edit-btn {
+  color: #3b82f6;
+}
+
+.edit-btn:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #2563eb;
+
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  color: #ef4444;
 }
 
 .delete-btn:hover {
-  color: var(--danger);
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+
+  transform: translateY(-1px);
 }

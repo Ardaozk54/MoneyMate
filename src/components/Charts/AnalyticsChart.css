@@ -1,0 +1,160 @@
+.analytics-card {
+  background: white;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 18px 45px rgba(20, 20, 50, 0.08);
+  width: 100%;
+  margin-top: 12px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.analytics-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #222;
+}
+
+.analytics-header p {
+  margin-top: 6px;
+  color: #888;
+  font-size: 14px;
+}
+
+.switch {
+  background: #f3f4f8;
+  padding: 5px;
+  border-radius: 14px;
+  display: flex;
+  gap: 5px;
+}
+
+.switch button {
+  border: none;
+  background: transparent;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #666;
+  transition: 0.3s;
+}
+
+.switch button.active {
+  background: var(--primary);
+  color: white;
+}
+
+.analytics-content {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.chart-section {
+  width: 45%;
+  position: relative;
+}
+
+.chart-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -45%);
+  text-align: center;
+}
+
+.chart-center span {
+  color: #999;
+  font-size: 13px;
+}
+
+.chart-center h3 {
+  margin-top: 5px;
+  font-size: 28px;
+  color: #222;
+}
+
+.stats-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-top {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #333;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  background: #ececf5;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: 0.5s;
+  transition:
+    width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s;
+}
+
+.amount {
+  font-size: 14px;
+  color: #777;
+}
+
+.recharts-tooltip-wrapper {
+  border-radius: 12px !important;
+}
+
+@media (max-width: 900px) {
+  .analytics-content {
+    flex-direction: column;
+  }
+
+  .chart-section {
+    width: 100%;
+    height: 320px;
+  }
+
+  .stats-section {
+    width: 100%;
+  }
+
+  .analytics-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+}

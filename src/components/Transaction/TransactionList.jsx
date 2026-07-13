@@ -1,6 +1,6 @@
 import TransactionItem from "./TransactionItem";
 
-function TransactionList({ transactions, onDelete }) {
+function TransactionList({ transactions, onDelete, onEdit }) {
   return (
     <>
       {transactions.map((transaction) => (
@@ -13,6 +13,7 @@ function TransactionList({ transactions, onDelete }) {
           type={transaction.type}
           date={transaction.date}
           onDelete={onDelete}
+          onEdit={onEdit}
         />
       ))}
     </>

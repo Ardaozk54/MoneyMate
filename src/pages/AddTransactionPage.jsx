@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./AddTransactionPage.css";
 import { categories } from "../constants/categories";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { initialFormData } from "../constants/initialFormData";
 import { toast } from "sonner";
 import { createTransaction } from "../utils/transaction";
 import { validateTransaction } from "../utils/validation";
-import TransactionPreview from "../components/TransactionPreview";
+import TransactionPreview from "../components/Transaction/TransactionPreview";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
-function AddTransactionPage({ setTransactions }) {
+function AddTransactionPage({ transactions, setTransactions }) {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const isEditMode = Boolean(id);
 
   const [showModal, setShowModal] = useState(false);
 
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState(initialFormData);
+
+  const transactionToEdit = transactions.find(
+    (transaction) => transaction.id === Number(id),
+  );
+
+  useEffect(() => {
+    console.log(transactionToEdit);
+    if (transactionToEdit) {
+      setFormData(transactionToEdit);
+    }
+  }, [transactionToEdit]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -33,17 +49,31 @@ function AddTransactionPage({ setTransactions }) {
   }
 
   function handleConfirm() {
-    const newTransaction = createTransaction(formData);
+    if (isEditMode) {
+      setTransactions((prev) =>
+        prev.map((transaction) =>
+          transaction.id === Number(id)
+            ? {
+                ...transaction,
+                ...formData,
+                amount: Number(formData.amount),
+              }
+            : transaction,
+        ),
+      );
 
-    setTransactions((prev) => [newTransaction, ...prev]);
+      toast.success("Transaction updated successfully!");
+    } else {
+      const newTransaction = createTransaction(formData);
+
+      setTransactions((prev) => [newTransaction, ...prev]);
+
+      toast.success("Transaction added successfully!");
+    }
 
     setShowModal(false);
-
     setErrors({});
-
     setFormData(initialFormData);
-
-    toast.success("Transaction added successfully!");
 
     navigate("/");
   }
@@ -62,12 +92,19 @@ function AddTransactionPage({ setTransactions }) {
 
   return (
     <main className="add-page">
+      {isEditMode && (
+        <Link to="/transactions" className="back-link">
+          <ArrowLeft size={16} />
+          <span>Back to Transactions</span>
+        </Link>
+      )}
       <div className="form-container">
-        <h1>Add Transaction</h1>
+        <h1>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h1>{" "}
         <p className="form-subtitle">
-          Keep your finances organized by adding a new transaction.
+          {isEditMode
+            ? "Update your transaction details."
+            : "Keep your finances organized by adding a new transaction."}
         </p>
-
         <form className="transaction-form" onSubmit={handleSubmit}>
           {/* Title */}
           <div className="form-group">
@@ -163,20 +200,23 @@ function AddTransactionPage({ setTransactions }) {
           </div>
 
           <button className="submit-btn" type="submit">
-            Add Transaction
+            {isEditMode ? "Update Transaction" : "Add Transaction"}
           </button>
         </form>
-
         {/* Debug - geliştirme sırasında kullan */}
         {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
       </div>
 
       {showModal && (
         <ConfirmationModal
-          title="Confirm Transaction"
+          title={isEditMode ? "Update Transaction" : "Confirm Transaction"}
           subtitle="Please review the transaction details before confirming."
-          warning="This transaction will be added to your finance history."
-          confirmText="Add Transaction"
+          warning={
+            isEditMode
+              ? "This transaction will be updated."
+              : "This transaction will be added to your finance history."
+          }
+          confirmText={isEditMode ? "Update" : "Add Transaction"}
           onConfirm={handleConfirm}
           onCancel={() => setShowModal(false)}
         >

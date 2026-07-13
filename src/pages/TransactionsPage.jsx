@@ -5,6 +5,7 @@ import TransactionList from "../components/Transaction/TransactionList";
 import Pagination from "../components/Pagination/Pagination";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 function TransactionsPage({ transactions, setTransactions }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,6 +54,12 @@ function TransactionsPage({ transactions, setTransactions }) {
     setSelectedTransaction(null);
   }
 
+  const navigate = useNavigate();
+
+  function handleEdit(id) {
+    navigate(`/edit-transaction/${id}`);
+  }
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, selectedType]);
@@ -77,6 +84,7 @@ function TransactionsPage({ transactions, setTransactions }) {
         <TransactionList
           transactions={currentTransactions}
           onDelete={handleDelete}
+          onEdit={handleEdit}
         />
       </section>
 

@@ -40,6 +40,16 @@ function App() {
               />
             }
           />
+
+          <Route
+            path="/edit-transaction/:id"
+            element={
+              <AddTransactionPage
+                transactions={transactions}
+                setTransactions={setTransactions}
+              />
+            }
+          />
         </Route>
 
         <Route path="/login" element={<LoginPage />} />

@@ -2,7 +2,7 @@ export const mockTransactions = [
   {
     id: 1,
     title: "Monthly Salary",
-    category: "Salary",
+    category: "SALARY",
     amount: 4500,
     type: "income",
     date: "2026-07-01",
@@ -10,7 +10,7 @@ export const mockTransactions = [
   {
     id: 2,
     title: "Freelance Website",
-    category: "Freelance",
+    category: "FREELANCE",
     amount: 1200,
     type: "income",
     date: "2026-07-03",
@@ -18,7 +18,7 @@ export const mockTransactions = [
   {
     id: 3,
     title: "Starbucks Coffee",
-    category: "Food",
+    category: "FOOD",
     amount: 18,
     type: "expense",
     date: "2026-07-04",
@@ -26,7 +26,7 @@ export const mockTransactions = [
   {
     id: 4,
     title: "Burger King",
-    category: "Food",
+    category: "FOOD",
     amount: 24,
     type: "expense",
     date: "2026-07-05",
@@ -34,7 +34,7 @@ export const mockTransactions = [
   {
     id: 5,
     title: "Uber Ride",
-    category: "Transport",
+    category: "TRANSPORT",
     amount: 32,
     type: "expense",
     date: "2026-07-05",
@@ -42,7 +42,7 @@ export const mockTransactions = [
   {
     id: 6,
     title: "Apartment Rent",
-    category: "Rent",
+    category: "RENT",
     amount: 950,
     type: "expense",
     date: "2026-07-01",
@@ -50,7 +50,7 @@ export const mockTransactions = [
   {
     id: 7,
     title: "Steam Summer Sale",
-    category: "Shopping",
+    category: "SHOPPING",
     amount: 45,
     type: "expense",
     date: "2026-07-06",
@@ -58,7 +58,7 @@ export const mockTransactions = [
   {
     id: 8,
     title: "Amazon Order",
-    category: "Shopping",
+    category: "SHOPPING",
     amount: 87,
     type: "expense",
     date: "2026-07-06",
@@ -66,7 +66,7 @@ export const mockTransactions = [
   {
     id: 9,
     title: "Netflix Subscription",
-    category: "Other",
+    category: "OTHER",
     amount: 15,
     type: "expense",
     date: "2026-07-07",
@@ -74,7 +74,7 @@ export const mockTransactions = [
   {
     id: 10,
     title: "Spotify Premium",
-    category: "Other",
+    category: "OTHER",
     amount: 10,
     type: "expense",
     date: "2026-07-07",
@@ -82,7 +82,7 @@ export const mockTransactions = [
   {
     id: 11,
     title: "Electricity Bill",
-    category: "Health",
+    category: "HEALTH",
     amount: 78,
     type: "expense",
     date: "2026-07-08",
@@ -90,7 +90,7 @@ export const mockTransactions = [
   {
     id: 12,
     title: "Gym Membership",
-    category: "Health",
+    category: "HEALTH",
     amount: 55,
     type: "expense",
     date: "2026-07-08",
@@ -98,7 +98,7 @@ export const mockTransactions = [
   {
     id: 13,
     title: "Bus Card Reload",
-    category: "Transport",
+    category: "TRANSPORT",
     amount: 20,
     type: "expense",
     date: "2026-07-09",
@@ -106,7 +106,7 @@ export const mockTransactions = [
   {
     id: 14,
     title: "Udemy Course",
-    category: "Education",
+    category: "EDUCATION",
     amount: 40,
     type: "expense",
     date: "2026-07-10",
@@ -114,7 +114,7 @@ export const mockTransactions = [
   {
     id: 15,
     title: "Book Purchase",
-    category: "Education",
+    category: "EDUCATION",
     amount: 22,
     type: "expense",
     date: "2026-07-10",
@@ -122,7 +122,7 @@ export const mockTransactions = [
   {
     id: 16,
     title: "Freelance Logo Design",
-    category: "Freelance",
+    category: "FREELANCE",
     amount: 350,
     type: "income",
     date: "2026-07-11",
@@ -130,7 +130,7 @@ export const mockTransactions = [
   {
     id: 17,
     title: "Client Payment",
-    category: "Freelance",
+    category: "FREELANCE",
     amount: 800,
     type: "income",
     date: "2026-07-12",
@@ -138,7 +138,7 @@ export const mockTransactions = [
   {
     id: 18,
     title: "Pizza Hut",
-    category: "Food",
+    category: "FOOD",
     amount: 28,
     type: "expense",
     date: "2026-07-12",
@@ -146,7 +146,7 @@ export const mockTransactions = [
   {
     id: 19,
     title: "Apple Store",
-    category: "Shopping",
+    category: "SHOPPING",
     amount: 299,
     type: "expense",
     date: "2026-07-13",
@@ -154,7 +154,7 @@ export const mockTransactions = [
   {
     id: 20,
     title: "Monthly Bonus",
-    category: "Salary",
+    category: "SALARY",
     amount: 750,
     type: "income",
     date: "2026-07-14",
