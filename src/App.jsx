@@ -24,7 +24,12 @@ function App() {
           />
           <Route
             path="/transactions"
-            element={<TransactionsPage transactions={transactions} />}
+            element={
+              <TransactionsPage
+                transactions={transactions}
+                setTransactions={setTransactions}
+              />
+            }
           />
           <Route
             path="/add-transactions"

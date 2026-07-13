@@ -3,6 +3,8 @@ import FilterBar from "../components/Filters/FilterBar";
 import "./TransactionsPage.css";
 import TransactionList from "../components/Transaction/TransactionList";
 import Pagination from "../components/Pagination/Pagination";
+import ConfirmationModal from "../components/Modal/ConfirmationModal";
+import { toast } from "sonner";
 
 function TransactionsPage({ transactions, setTransactions }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,9 +34,29 @@ function TransactionsPage({ transactions, setTransactions }) {
   const endIndex = startIndex + transactionsPerPage;
   const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
 
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  function handleDelete(id) {
+    const transaction = transactions.find(
+      (transaction) => transaction.id === id,
+    );
+
+    setSelectedTransaction(transaction);
+  }
+
+  function confirmDelete() {
+    setTransactions((prev) =>
+      prev.filter((transaction) => transaction.id !== selectedTransaction.id),
+    );
+
+    toast.success("Transaction deleted successfully!");
+
+    setSelectedTransaction(null);
+  }
+
   useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, selectedType]);
+
   return (
     <main className="transactions-page">
       <section className="page-header">
@@ -52,7 +74,10 @@ function TransactionsPage({ transactions, setTransactions }) {
       />
 
       <section className="transactions-container">
-        <TransactionList transactions={currentTransactions}></TransactionList>
+        <TransactionList
+          transactions={currentTransactions}
+          onDelete={handleDelete}
+        />
       </section>
 
       {totalPages > 1 && (
@@ -61,6 +86,37 @@ function TransactionsPage({ transactions, setTransactions }) {
           totalPages={totalPages}
           setCurrentPage={setCurrentPage}
         />
+      )}
+
+      {selectedTransaction && (
+        <ConfirmationModal
+          title="Delete Transaction"
+          subtitle="This action cannot be undone."
+          warning="The selected transaction will be permanently removed."
+          confirmText="Delete"
+          onConfirm={confirmDelete}
+          onCancel={() => setSelectedTransaction(null)}
+        >
+          <div className="modal-row">
+            <span>Title</span>
+            <strong>{selectedTransaction.title}</strong>
+          </div>
+
+          <div className="modal-row">
+            <span>Category</span>
+            <strong>{selectedTransaction.category}</strong>
+          </div>
+
+          <div className="modal-row">
+            <span>Amount</span>
+            <strong>${selectedTransaction.amount.toLocaleString()}</strong>
+          </div>
+
+          <div className="modal-row">
+            <span>Date</span>
+            <strong>{selectedTransaction.date}</strong>
+          </div>
+        </ConfirmationModal>
       )}
     </main>
   );

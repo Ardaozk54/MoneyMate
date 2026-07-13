@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { initialFormData } from "../constants/initialFormData";
 import { toast } from "sonner";
+import { createTransaction } from "../utils/transaction";
+import { validateTransaction } from "../utils/validation";
+import TransactionPreview from "../components/TransactionPreview";
+
 function AddTransactionPage({ setTransactions }) {
   const navigate = useNavigate();
 
@@ -13,30 +17,6 @@ function AddTransactionPage({ setTransactions }) {
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState(initialFormData);
-
-  function validateForm() {
-    const newErrors = {};
-
-    if (!formData.title.trim()) {
-      newErrors.title = "Title is required.";
-    }
-
-    if (!formData.category) {
-      newErrors.category = "Please select a category.";
-    }
-
-    if (!formData.amount || Number(formData.amount) <= 0) {
-      newErrors.amount = "Amount must be greater than zero.";
-    }
-
-    if (!formData.date) {
-      newErrors.date = "Please select a date.";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -53,19 +33,7 @@ function AddTransactionPage({ setTransactions }) {
   }
 
   function handleConfirm() {
-    const newTransaction = {
-      id: Date.now(),
-
-      title: formData.title,
-
-      category: formData.category,
-
-      amount: Number(formData.amount),
-
-      type: formData.type,
-
-      date: formData.date,
-    };
+    const newTransaction = createTransaction(formData);
 
     setTransactions((prev) => [newTransaction, ...prev]);
 
@@ -83,7 +51,11 @@ function AddTransactionPage({ setTransactions }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const newErrors = validateTransaction(formData);
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
 
     setShowModal(true);
   }
@@ -201,12 +173,15 @@ function AddTransactionPage({ setTransactions }) {
 
       {showModal && (
         <ConfirmationModal
-          formData={formData}
-
-          onCancel={() => setShowModal(false)}
-
+          title="Confirm Transaction"
+          subtitle="Please review the transaction details before confirming."
+          warning="This transaction will be added to your finance history."
+          confirmText="Add Transaction"
           onConfirm={handleConfirm}
-        />
+          onCancel={() => setShowModal(false)}
+        >
+          <TransactionPreview transaction={formData} />
+        </ConfirmationModal>
       )}
     </main>
   );

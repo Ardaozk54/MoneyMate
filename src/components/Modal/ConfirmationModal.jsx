@@ -1,53 +1,33 @@
 import "./ConfirmationModal.css";
 
-function ConfirmationModal({ formData, onConfirm, onCancel }) {
+function ConfirmationModal({
+  title,
+  subtitle,
+  warning,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm,
+  onCancel,
+  children,
+}) {
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2>Confirm Transaction</h2>
+        <h2>{title}</h2>
 
-        <p className="modal-subtitle">
-          Please review the transaction details before confirming.
-        </p>
+        {subtitle && <p className="modal-subtitle">{subtitle}</p>}
 
-        <div className="modal-content">
-          <div className="modal-row">
-            <span>Title</span>
-            <strong>{formData.title}</strong>
-          </div>
+        <div className="modal-content">{children}</div>
 
-          <div className="modal-row">
-            <span>Category</span>
-            <strong>{formData.category}</strong>
-          </div>
-
-          <div className="modal-row">
-            <span>Amount</span>
-            <strong>${Number(formData.amount).toLocaleString()}</strong>
-          </div>
-
-          <div className="modal-row">
-            <span>Type</span>
-            <strong className={formData.type}>{formData.type}</strong>
-          </div>
-
-          <div className="modal-row">
-            <span>Date</span>
-            <strong>{formData.date}</strong>
-          </div>
-        </div>
-
-        <div className="modal-warning">
-          This transaction will be added to your finance history.
-        </div>
+        {warning && <div className="modal-warning">{warning}</div>}
 
         <div className="modal-actions">
           <button className="cancel-btn" onClick={onCancel}>
-            Cancel
+            {cancelText}
           </button>
 
           <button className="confirm-btn" onClick={onConfirm}>
-            Confirm
+            {confirmText}
           </button>
         </div>
       </div>
