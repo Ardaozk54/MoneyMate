@@ -1,34 +1,36 @@
 import { useState, useEffect } from "react";
 import "./AddTransactionPage.css";
-import { categories } from "../constants/categories";
-import { useNavigate, useParams } from "react-router-dom";
-import ConfirmationModal from "../components/Modal/ConfirmationModal";
-import { initialFormData } from "../constants/initialFormData";
-import { toast } from "sonner";
-import { createTransaction } from "../utils/transaction";
-import { validateTransaction } from "../utils/validation";
-import TransactionPreview from "../components/Transaction/TransactionPreview";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 
-function AddTransactionPage({ transactions, setTransactions }) {
+import { categories } from "../constants/categories";
+import { initialFormData } from "../constants/initialFormData";
+import { validateTransaction } from "../utils/validation";
+
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+
+import { useTransactions } from "../context/TransactionContext";
+
+import ConfirmationModal from "../components/Modal/ConfirmationModal";
+import TransactionPreview from "../components/Transaction/TransactionPreview";
+
+function AddTransactionPage() {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const isEditMode = Boolean(id);
 
+  const { transactions, addTransaction, updateTransaction } = useTransactions();
+
   const [showModal, setShowModal] = useState(false);
-
   const [errors, setErrors] = useState({});
-
   const [formData, setFormData] = useState(initialFormData);
 
   const transactionToEdit = transactions.find(
-    (transaction) => transaction.id === Number(id),
+    (transaction) => transaction.id === id,
   );
 
   useEffect(() => {
-    console.log(transactionToEdit);
     if (transactionToEdit) {
       setFormData(transactionToEdit);
     }
@@ -48,34 +50,33 @@ function AddTransactionPage({ transactions, setTransactions }) {
     }));
   }
 
-  function handleConfirm() {
-    if (isEditMode) {
-      setTransactions((prev) =>
-        prev.map((transaction) =>
-          transaction.id === Number(id)
-            ? {
-                ...transaction,
-                ...formData,
-                amount: Number(formData.amount),
-              }
-            : transaction,
-        ),
-      );
+  async function handleConfirm() {
+    try {
+      if (isEditMode) {
+        await updateTransaction(id, {
+          ...formData,
+          amount: Number(formData.amount),
+        });
 
-      toast.success("Transaction updated successfully!");
-    } else {
-      const newTransaction = createTransaction(formData);
+        toast.success("Transaction updated successfully!");
+      } else {
+        await addTransaction({
+          ...formData,
+          amount: Number(formData.amount),
+        });
 
-      setTransactions((prev) => [newTransaction, ...prev]);
+        toast.success("Transaction added successfully!");
+      }
 
-      toast.success("Transaction added successfully!");
+      setShowModal(false);
+      setErrors({});
+      setFormData(initialFormData);
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
     }
-
-    setShowModal(false);
-    setErrors({});
-    setFormData(initialFormData);
-
-    navigate("/");
   }
 
   function handleSubmit(e) {
@@ -98,15 +99,17 @@ function AddTransactionPage({ transactions, setTransactions }) {
           <span>Back to Transactions</span>
         </Link>
       )}
+
       <div className="form-container">
-        <h1>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h1>{" "}
+        <h1>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h1>
+
         <p className="form-subtitle">
           {isEditMode
             ? "Update your transaction details."
             : "Keep your finances organized by adding a new transaction."}
         </p>
+
         <form className="transaction-form" onSubmit={handleSubmit}>
-          {/* Title */}
           <div className="form-group">
             <label htmlFor="title">Title</label>
 
@@ -119,10 +122,10 @@ function AddTransactionPage({ transactions, setTransactions }) {
               onChange={handleChange}
               className={errors.title ? "input-error" : ""}
             />
+
             {errors.title && <p className="error-message">{errors.title}</p>}
           </div>
 
-          {/* Category */}
           <div className="form-group">
             <label htmlFor="category">Category</label>
 
@@ -147,7 +150,6 @@ function AddTransactionPage({ transactions, setTransactions }) {
             )}
           </div>
 
-          {/* Amount */}
           <div className="form-group">
             <label htmlFor="amount">Amount</label>
 
@@ -168,7 +170,6 @@ function AddTransactionPage({ transactions, setTransactions }) {
             {errors.amount && <p className="error-message">{errors.amount}</p>}
           </div>
 
-          {/* Type */}
           <div className="form-group">
             <label htmlFor="type">Transaction Type</label>
 
@@ -179,11 +180,11 @@ function AddTransactionPage({ transactions, setTransactions }) {
               onChange={handleChange}
             >
               <option value="expense">Expense</option>
+
               <option value="income">Income</option>
             </select>
           </div>
 
-          {/* Date */}
           <div className="form-group">
             <label htmlFor="date">Date</label>
 
@@ -203,8 +204,6 @@ function AddTransactionPage({ transactions, setTransactions }) {
             {isEditMode ? "Update Transaction" : "Add Transaction"}
           </button>
         </form>
-        {/* Debug - geliştirme sırasında kullan */}
-        {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
       </div>
 
       {showModal && (

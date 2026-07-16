@@ -1,17 +1,14 @@
-import Footer from "../components/Footer"
-import Header from "../components/Header/Header"
-import { Outlet } from "react-router-dom"
-
+import Header from "../components/Header/Header";
+import { Outlet } from "react-router-dom";
 
 function MainLayout() {
   return (
     <>
-    <Header/>
-    <Outlet/>
-    {/* <Footer/> */}
+      <Header />
+      <Outlet />
+      {/* <Footer/> */}
     </>
-  )
+  );
 }
 
-export default MainLayout
-
+export default MainLayout;

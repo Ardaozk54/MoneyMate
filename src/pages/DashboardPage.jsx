@@ -1,8 +1,10 @@
-import SummaryCard from "../components/SummaryCard/SummaryCard";
 import "./DashboardPage.css";
 
+import SummaryCard from "../components/SummaryCard/SummaryCard";
 import TransactionList from "../components/Transaction/TransactionList";
 import AnalyticsChart from "../components/Charts/AnalyticsChart";
+
+import { useTransactions } from "../context/TransactionContext";
 
 import {
   calculateIncome,
@@ -10,7 +12,16 @@ import {
   calculateBalance,
 } from "../utils/finance";
 
-function DashboardPage({ transactions }) {
+import { useAuth } from "../context/AuthContext";
+
+function DashboardPage() {
+  const { transactions, loading } = useTransactions();
+  const { user } = useAuth();
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
   const income = calculateIncome(transactions);
   const expense = calculateExpense(transactions);
   const balance = calculateBalance(income, expense);
@@ -18,7 +29,10 @@ function DashboardPage({ transactions }) {
   return (
     <main className="dashboard">
       <section className="dashboard-header">
-        <h1>Welcome back 👋</h1>
+        <h1>
+          Welcome back
+          {user?.displayName ? `, ${user.displayName}` : ""} 👋
+        </h1>
 
         <p>Track your finances with confidence.</p>
       </section>

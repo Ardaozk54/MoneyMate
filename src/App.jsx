@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
 
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
@@ -7,53 +6,49 @@ import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./layouts/MainLayout";
 import TransactionsPage from "./pages/TransactionsPage";
 import AddTransactionPage from "./pages/AddTransactionPage";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
+import PublicRoute from "./components/Auth/PublicRoute";
 
-import { mockTransactions } from "./data/mockTransactions";
 import { Toaster } from "sonner";
 
 function App() {
-  const [transactions, setTransactions] = useState(mockTransactions);
   console.log("App çalıştı");
   return (
     <>
       <Routes>
-        <Route element={<MainLayout />}>
-          <Route
-            path="/"
-            element={<DashboardPage transactions={transactions} />}
-          />
-          <Route
-            path="/transactions"
-            element={
-              <TransactionsPage
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
-          <Route
-            path="/add-transactions"
-            element={
-              <AddTransactionPage
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
-          />
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/add-transactions" element={<AddTransactionPage />} />
 
           <Route
             path="/edit-transaction/:id"
-            element={
-              <AddTransactionPage
-                transactions={transactions}
-                setTransactions={setTransactions}
-              />
-            }
+            element={<AddTransactionPage />}
           />
         </Route>
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
+        />
       </Routes>
 
       <Toaster richColors position="top-right" />

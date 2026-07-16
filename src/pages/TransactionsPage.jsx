@@ -6,12 +6,17 @@ import Pagination from "../components/Pagination/Pagination";
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useTransactions } from "../context/TransactionContext";
 
-function TransactionsPage({ transactions, setTransactions }) {
+function TransactionsPage() {
+  const { transactions, deleteTransaction, loading } = useTransactions();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedType, setSelectedType] = useState("ALL");
 
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch = transaction.title
       .toLowerCase()
@@ -44,14 +49,16 @@ function TransactionsPage({ transactions, setTransactions }) {
     setSelectedTransaction(transaction);
   }
 
-  function confirmDelete() {
-    setTransactions((prev) =>
-      prev.filter((transaction) => transaction.id !== selectedTransaction.id),
-    );
+  async function confirmDelete() {
+    try {
+      await deleteTransaction(selectedTransaction.id);
 
-    toast.success("Transaction deleted successfully!");
+      toast.success("Transaction deleted successfully!");
 
-    setSelectedTransaction(null);
+      setSelectedTransaction(null);
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   const navigate = useNavigate();
