@@ -1,5 +1,6 @@
 import "./FilterBar.css";
 import { categories } from "../../constants/categories";
+
 function FilterBar({
   searchTerm,
   setSearchTerm,
@@ -9,18 +10,19 @@ function FilterBar({
   setSelectedType,
 }) {
   return (
-    <div className="filter-bar">
+    <section className="filter-bar">
       <input
         type="text"
-        placeholder="Search Transactions"
+        placeholder="Search transaction..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
       >
-        <option value="ALL">All Categories</option>
+        <option value="ALL">Category</option>
 
         {categories.map((category) => (
           <option key={category.value} value={category.value}>
@@ -33,13 +35,11 @@ function FilterBar({
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
       >
-        <option value="ALL">All Types</option>
-
+        <option value="ALL">Type</option>
         <option value="income">Income</option>
-
         <option value="expense">Expense</option>
       </select>
-    </div>
+    </section>
   );
 }
 

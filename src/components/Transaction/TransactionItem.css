@@ -1,14 +1,16 @@
 .transaction-item {
   display: grid;
   grid-template-columns: 1fr auto auto;
+
   align-items: center;
 
-  padding: 18px 24px;
-  gap: 20px;
+  gap: 22px;
+
+  padding: 20px 22px;
 
   border-bottom: 1px solid var(--border);
 
-  transition: background 0.2s ease;
+  transition: var(--transition-fast);
 }
 
 .transaction-item:last-child {
@@ -16,44 +18,74 @@
 }
 
 .transaction-item:hover {
-  background: var(--background);
-  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+/* ========================= */
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .transaction-info h3 {
-  margin-bottom: 4px;
+  margin: 0;
 
-  font-size: 16px;
+  font-size: 0.95rem;
+
   font-weight: 600;
 
   color: var(--text);
 }
 
-.transaction-info p {
-  font-size: 14px;
+/* ========================= */
+
+.category-badge {
+  width: fit-content;
+
+  padding: 4px 10px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 999px;
+
+  background: var(--surface-2);
+
   color: var(--text-secondary);
+
+  font-size: 0.72rem;
+
+  font-weight: 500;
 }
 
+/* ========================= */
+
 .transaction-meta {
+  min-width: 130px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
-  min-width: 120px;
 
   gap: 6px;
 }
 
 .transaction-meta h3 {
-  font-size: 1.3rem;
+  margin: 0;
+
+  font-size: 1.2rem;
+
   font-weight: 700;
-  line-height: 1;
+
+  letter-spacing: -0.02em;
 }
 
 .transaction-meta p {
   margin: 0;
 
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+
   color: var(--text-secondary);
 }
 
@@ -65,53 +97,69 @@
   color: var(--danger);
 }
 
-/* ---------- ACTIONS ---------- */
+/* ========================= */
 
 .transaction-actions {
   display: flex;
-  align-items: center;
+
   gap: 8px;
 }
 
 .edit-btn,
 .delete-btn {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  background: transparent;
 
-  background: #fff;
+  border: 1px solid transparent;
+
+  border-radius: 8px;
+
+  color: var(--text-secondary);
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
-}
-
-.edit-btn {
-  color: #3b82f6;
+  transition: var(--transition-fast);
 }
 
 .edit-btn:hover {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: #2563eb;
+  background: rgba(59, 130, 246, 0.08);
 
-  transform: translateY(-1px);
-}
+  border-color: rgba(59, 130, 246, 0.18);
 
-.delete-btn {
-  color: #ef4444;
+  color: #60a5fa;
 }
 
 .delete-btn:hover {
-  background: #fef2f2;
-  border-color: #fecaca;
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.08);
 
-  transform: translateY(-1px);
+  border-color: rgba(239, 68, 68, 0.18);
+
+  color: #f87171;
+}
+
+@media (max-height: 800px) {
+  .analytics-card {
+    min-height: 400px;
+    padding: 18px;
+  }
+
+  .chart-section {
+    width: 220px;
+    height: 220px;
+  }
+
+  .chart-center h3 {
+    font-size: 1.4rem;
+  }
+
+  .analytics-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
 }

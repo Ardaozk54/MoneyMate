@@ -12,11 +12,8 @@ import {
   calculateBalance,
 } from "../utils/finance";
 
-import { useAuth } from "../context/AuthContext";
-
 function DashboardPage() {
   const { transactions, loading } = useTransactions();
-  const { user } = useAuth();
 
   if (loading) {
     return <h2>Loading...</h2>;
@@ -28,15 +25,6 @@ function DashboardPage() {
 
   return (
     <main className="dashboard">
-      <section className="dashboard-header">
-        <h1>
-          Welcome back
-          {user?.displayName ? `, ${user.displayName}` : ""} 👋
-        </h1>
-
-        <p>Track your finances with confidence.</p>
-      </section>
-
       <section className="summary-cards">
         <SummaryCard title="Balance" amount={balance} />
 
@@ -45,14 +33,16 @@ function DashboardPage() {
         <SummaryCard title="Expense" amount={expense} type="expense" />
       </section>
 
-      <section className="transaction-list">
-        <h2 className="transaction-title">Recent Transactions</h2>
-
-        <TransactionList transactions={transactions.slice(0, 5)} />
-      </section>
-
-      <section className="dashboard-analytics">
+      <section className="dashboard-grid">
         <AnalyticsChart transactions={transactions} />
+
+        <section className="transaction-list">
+          <div className="transaction-header">
+            <h2 className="transaction-title">Recent Transactions</h2>
+          </div>
+
+          <TransactionList transactions={transactions.slice(0, 5)} />
+        </section>
       </section>
     </main>
   );

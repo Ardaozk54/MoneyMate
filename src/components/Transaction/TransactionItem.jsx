@@ -1,7 +1,6 @@
 import "./TransactionItem.css";
 import { categories } from "../../constants/categories";
-import { Trash2 } from "lucide-react";
-import { Pencil } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
 
 function TransactionItem({
   title,
@@ -15,34 +14,37 @@ function TransactionItem({
 }) {
   const categoryLabel =
     categories.find((c) => c.value === category)?.label || category;
+
   return (
-    <div className="transaction-item">
+    <article className="transaction-item">
       <div className="transaction-info">
         <h3>{title}</h3>
-        <p>{categoryLabel}</p>
+
+        <span className="category-badge">{categoryLabel}</span>
       </div>
 
       <div className="transaction-meta">
         <h3 className={`transaction-amount-${type}`}>
           ${amount.toLocaleString("tr-TR")}
         </h3>
+
         <p>{date}</p>
       </div>
 
       <div className="transaction-actions">
         {onEdit && (
           <button className="edit-btn" onClick={() => onEdit(id)}>
-            <Pencil size={17} strokeWidth={2.2} />
+            <Pencil size={16} />
           </button>
         )}
 
         {onDelete && (
           <button className="delete-btn" onClick={() => onDelete(id)}>
-            <Trash2 size={17} strokeWidth={2.2} />
+            <Trash2 size={16} />
           </button>
         )}
       </div>
-    </div>
+    </article>
   );
 }
 

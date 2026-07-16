@@ -1,0 +1,72 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 32px;
+  padding: 4px 0 24px;
+
+  border-bottom: 1px solid var(--border);
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.topbar-left h1 {
+  margin: 0;
+
+  font-size: 1.9rem;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+
+  color: var(--text);
+}
+
+.topbar-left p {
+  margin-top: 8px;
+
+  font-size: 0.88rem;
+
+  color: var(--text-secondary);
+}
+
+.topbar-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.topbar-btn {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-secondary);
+
+  transition: var(--transition-fast);
+}
+
+.topbar-btn:hover {
+  background: var(--surface-2);
+
+  border-color: var(--border-hover);
+
+  color: var(--text);
+}
+
+.topbar-btn svg {
+  stroke-width: 2;
+}
