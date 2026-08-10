@@ -8,6 +8,10 @@
   </p>
 </div>
 
+<p align="center">
+  <img src="./img/Dashboard.png" alt="MoneyMate dashboard in dark mode" width="100%" />
+</p>
+
 ## Overview
 
 MoneyMate is a personal finance web application built with React and Firebase.
@@ -35,6 +39,35 @@ and is designed to work across desktop and mobile screen sizes.
 - Pagination and confirmation dialogs
 - Responsive layout for desktop, tablet, and mobile devices
 - Toast notifications for important actions
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%" align="center"><strong>Financial Analytics</strong></td>
+    <td width="50%" align="center"><strong>Transaction Management</strong></td>
+  </tr>
+  <tr>
+    <td>
+      <img src="./img/Analytics.png" alt="MoneyMate financial analytics page" />
+    </td>
+    <td>
+      <img src="./img/Transactions.png" alt="MoneyMate transaction management page" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><strong>Light Theme</strong></td>
+    <td width="50%" align="center"><strong>Authentication</strong></td>
+  </tr>
+  <tr>
+    <td>
+      <img src="./img/WhiteTheme.png" alt="MoneyMate dashboard in light mode" />
+    </td>
+    <td>
+      <img src="./img/login.png" alt="MoneyMate login page" />
+    </td>
+  </tr>
+</table>
 
 ## Tech Stack
 
