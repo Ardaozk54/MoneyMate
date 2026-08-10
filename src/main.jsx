@@ -6,15 +6,18 @@ import { TransactionProvider } from "./context/TransactionContext";
 import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./context/AuthContext";
+import { SettingsProvider } from "./context/SettingsContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <TransactionProvider>
-          <App />
-        </TransactionProvider>
-      </AuthProvider>
+      <SettingsProvider>
+        <AuthProvider>
+          <TransactionProvider>
+            <App />
+          </TransactionProvider>
+        </AuthProvider>
+      </SettingsProvider>
     </BrowserRouter>
   </StrictMode>,
 );

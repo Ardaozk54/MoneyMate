@@ -8,9 +8,11 @@ import InputField from "../components/Form/InputField/InputField";
 import { register } from "../services/authService";
 
 import "./RegisterPage.css";
+import { useSettings } from "../context/SettingsContext";
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const { t } = useSettings();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,19 +40,19 @@ function RegisterPage() {
     const newErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = "Name is required.";
+      newErrors.name = t("nameRequired");
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t("emailRequired");
     }
 
     if (!formData.password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t("passwordRequired");
     }
 
     if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters.";
+      newErrors.password = t("passwordMin");
     }
 
     setErrors(newErrors);
@@ -66,7 +68,7 @@ function RegisterPage() {
     try {
       await register(formData.name, formData.email, formData.password);
 
-      toast.success(`Welcome ${formData.name}! 👋`);
+      toast.success(t("accountCreated"));
 
       navigate("/");
     } catch (error) {
@@ -77,13 +79,10 @@ function RegisterPage() {
   }
 
   return (
-    <AuthCard
-      title="Create Account"
-      subtitle="Start managing your finances today."
-    >
+    <AuthCard title={t("createAccount")} subtitle={t("registerSubtitle")}>
       <form onSubmit={handleSubmit}>
         <InputField
-          label="Name"
+          label={t("name")}
           name="name"
           value={formData.name}
           onChange={handleChange}
@@ -92,7 +91,7 @@ function RegisterPage() {
         />
 
         <InputField
-          label="Email"
+          label={t("email")}
           type="email"
           name="email"
           value={formData.email}
@@ -102,7 +101,7 @@ function RegisterPage() {
         />
 
         <InputField
-          label="Password"
+          label={t("password")}
           type="password"
           name="password"
           value={formData.password}
@@ -112,12 +111,12 @@ function RegisterPage() {
         />
 
         <button className="auth-btn" type="submit">
-          Create Account
+          {t("createAccount")}
         </button>
       </form>
 
       <p className="auth-footer">
-        Already have an account? <Link to="/login">Login</Link>
+        {t("alreadyAccount")} <Link to="/login">{t("login")}</Link>
       </p>
     </AuthCard>
   );

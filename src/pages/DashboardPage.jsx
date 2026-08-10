@@ -3,6 +3,7 @@ import "./DashboardPage.css";
 import SummaryCard from "../components/SummaryCard/SummaryCard";
 import TransactionList from "../components/Transaction/TransactionList";
 import AnalyticsChart from "../components/Charts/AnalyticsChart";
+import DashboardSkeleton from "../components/Skeleton/DashboardSkeleton";
 
 import { useTransactions } from "../context/TransactionContext";
 
@@ -11,12 +12,14 @@ import {
   calculateExpense,
   calculateBalance,
 } from "../utils/finance";
+import { useSettings } from "../context/SettingsContext";
 
 function DashboardPage() {
   const { transactions, loading } = useTransactions();
+  const { t } = useSettings();
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <DashboardSkeleton />;
   }
 
   const income = calculateIncome(transactions);
@@ -26,11 +29,11 @@ function DashboardPage() {
   return (
     <main className="dashboard">
       <section className="summary-cards">
-        <SummaryCard title="Balance" amount={balance} />
+        <SummaryCard title={t("balance")} amount={balance} />
 
-        <SummaryCard title="Income" amount={income} type="income" />
+        <SummaryCard title={t("income")} amount={income} type="income" />
 
-        <SummaryCard title="Expense" amount={expense} type="expense" />
+        <SummaryCard title={t("expense")} amount={expense} type="expense" />
       </section>
 
       <section className="dashboard-grid">
@@ -38,7 +41,7 @@ function DashboardPage() {
 
         <section className="transaction-list">
           <div className="transaction-header">
-            <h2 className="transaction-title">Recent Transactions</h2>
+            <h2 className="transaction-title">{t("recentTransactions")}</h2>
           </div>
 
           <TransactionList transactions={transactions.slice(0, 5)} />

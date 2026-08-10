@@ -1,5 +1,7 @@
 import "./FilterBar.css";
 import { categories } from "../../constants/categories";
+import { useSettings } from "../../context/SettingsContext";
+import { categoryTranslationKeys } from "../../i18n/translations";
 
 function FilterBar({
   searchTerm,
@@ -9,11 +11,13 @@ function FilterBar({
   selectedType,
   setSelectedType,
 }) {
+  const { t } = useSettings();
+
   return (
     <section className="filter-bar">
       <input
         type="text"
-        placeholder="Search transaction..."
+        placeholder={t("searchTransaction")}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
@@ -22,11 +26,11 @@ function FilterBar({
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
       >
-        <option value="ALL">Category</option>
+        <option value="ALL">{t("category")}</option>
 
         {categories.map((category) => (
           <option key={category.value} value={category.value}>
-            {category.label}
+            {t(categoryTranslationKeys[category.value])}
           </option>
         ))}
       </select>
@@ -35,9 +39,9 @@ function FilterBar({
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
       >
-        <option value="ALL">Type</option>
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
+        <option value="ALL">{t("type")}</option>
+        <option value="income">{t("income")}</option>
+        <option value="expense">{t("expense")}</option>
       </select>
     </section>
   );

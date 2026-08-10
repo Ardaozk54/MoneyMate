@@ -1,20 +1,20 @@
-export function validateTransaction(formData) {
+export function validateTransaction(formData, t = (key) => key) {
   const errors = {};
 
   if (!formData.title.trim()) {
-    errors.title = "Title is required.";
+    errors.title = t("titleRequired");
   }
 
   if (!formData.category) {
-    errors.category = "Please select a category.";
+    errors.category = t("categoryRequired");
   }
 
   if (!formData.amount || Number(formData.amount) <= 0) {
-    errors.amount = "Amount must be greater than zero.";
+    errors.amount = t("amountRequired");
   }
 
   if (!formData.date) {
-    errors.date = "Please select a date.";
+    errors.date = t("dateRequired");
   }
 
   return errors;

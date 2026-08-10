@@ -1,15 +1,18 @@
 import "./ConfirmationModal.css";
+import { useSettings } from "../../context/SettingsContext";
 
 function ConfirmationModal({
   title,
   subtitle,
   warning,
   confirmText = "Confirm",
-  cancelText = "Cancel",
+  cancelText,
   onConfirm,
   onCancel,
   children,
 }) {
+  const { t } = useSettings();
+
   return (
     <div className="modal-overlay">
       <div className="modal">
@@ -23,7 +26,7 @@ function ConfirmationModal({
 
         <div className="modal-actions">
           <button className="cancel-btn" onClick={onCancel}>
-            {cancelText}
+            {cancelText || t("cancel")}
           </button>
 
           <button className="confirm-btn" onClick={onConfirm}>

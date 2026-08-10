@@ -1,11 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import AuthSkeleton from "../Skeleton/AuthSkeleton";
 
 function PublicRoute({ children }) {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <AuthSkeleton />;
   }
 
   if (user) {

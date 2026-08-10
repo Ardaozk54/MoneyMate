@@ -7,8 +7,8 @@ import {
   ReceiptText,
   CirclePlus,
   ChartPie,
-  Languages,
   Moon,
+  Sun,
   LogOut,
   ChevronLeft,
 } from "lucide-react";
@@ -16,9 +16,12 @@ import {
 import { HiOutlineWallet } from "react-icons/hi2";
 
 import { useAuth } from "../../context/AuthContext";
+import { useSettings } from "../../context/SettingsContext";
+import LanguageMenu from "../Settings/LanguageMenu";
 
 function Sidebar({ collapsed, setCollapsed }) {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme, t } = useSettings();
 
   async function handleLogout() {
     try {
@@ -38,7 +41,7 @@ function Sidebar({ collapsed, setCollapsed }) {
             {!collapsed && (
               <div className="logo-content">
                 <span className="logo-text">MoneyMate</span>
-                <small>Personal Finance</small>
+                <small>{t("personalFinance")}</small>
               </div>
             )}
           </div>
@@ -54,36 +57,42 @@ function Sidebar({ collapsed, setCollapsed }) {
         <nav className="sidebar-nav">
           <NavLink to="/" className="sidebar-link">
             <LayoutDashboard size={20} />
-            {!collapsed && <span>Dashboard</span>}
+            {!collapsed && <span>{t("dashboard")}</span>}
           </NavLink>
 
           <NavLink to="/transactions" className="sidebar-link">
             <ReceiptText size={20} />
-            {!collapsed && <span>Transactions</span>}
+            {!collapsed && <span>{t("transactions")}</span>}
           </NavLink>
 
           <NavLink to="/add-transactions" className="sidebar-link">
             <CirclePlus size={20} />
-            {!collapsed && <span>Add Transaction</span>}
+            {!collapsed && <span>{t("addTransaction")}</span>}
           </NavLink>
 
-          <button className="sidebar-link">
+          <NavLink to="/analytics" className="sidebar-link">
             <ChartPie size={20} />
-            {!collapsed && <span>Analytics</span>}
-          </button>
+            {!collapsed && <span>{t("analytics")}</span>}
+          </NavLink>
         </nav>
       </div>
 
       <div className="sidebar-footer">
         <div className="sidebar-settings">
-          <button className="sidebar-link">
-            <Languages size={20} />
-            {!collapsed && <span>Language</span>}
-          </button>
+          <LanguageMenu variant="sidebar" collapsed={collapsed} />
 
-          <button className="sidebar-link">
-            <Moon size={20} />
-            {!collapsed && <span>Theme</span>}
+          <button
+            className="sidebar-link"
+            type="button"
+            aria-label={t("switchTheme")}
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
+            {!collapsed && (
+              <span>
+                {t("theme")}: {t(theme === "dark" ? "darkTheme" : "lightTheme")}
+              </span>
+            )}
           </button>
         </div>
 
@@ -102,7 +111,7 @@ function Sidebar({ collapsed, setCollapsed }) {
 
         <button className="logout-btn" onClick={handleLogout}>
           <LogOut size={18} />
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span>{t("logout")}</span>}
         </button>
       </div>
     </aside>

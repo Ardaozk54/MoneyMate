@@ -8,9 +8,11 @@ import InputField from "../components/Form/InputField/InputField";
 import { login } from "../services/authService";
 
 import "./LoginPage.css";
+import { useSettings } from "../context/SettingsContext";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useSettings();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -37,11 +39,11 @@ function LoginPage() {
     const newErrors = {};
 
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required.";
+      newErrors.email = t("emailRequired");
     }
 
     if (!formData.password.trim()) {
-      newErrors.password = "Password is required.";
+      newErrors.password = t("passwordRequired");
     }
 
     setErrors(newErrors);
@@ -57,7 +59,7 @@ function LoginPage() {
     try {
       await login(formData.email, formData.password);
 
-      toast.success("Welcome back!");
+      toast.success(t("loginSuccess"));
 
       navigate("/");
     } catch (error) {
@@ -66,13 +68,10 @@ function LoginPage() {
   }
 
   return (
-    <AuthCard
-      title="Welcome Back"
-      subtitle="Sign in to continue managing your finances."
-    >
+    <AuthCard title={t("welcomeBack")} subtitle={t("signInSubtitle")}>
       <form onSubmit={handleSubmit}>
         <InputField
-          label="Email"
+          label={t("email")}
           type="email"
           name="email"
           value={formData.email}
@@ -82,7 +81,7 @@ function LoginPage() {
         />
 
         <InputField
-          label="Password"
+          label={t("password")}
           type="password"
           name="password"
           value={formData.password}
@@ -92,12 +91,12 @@ function LoginPage() {
         />
 
         <button className="auth-btn" type="submit">
-          Login
+          {t("login")}
         </button>
       </form>
 
       <p className="auth-footer">
-        Don't have an account? <Link to="/register">Create one</Link>
+        {t("noAccount")} <Link to="/register">{t("createOne")}</Link>
       </p>
     </AuthCard>
   );

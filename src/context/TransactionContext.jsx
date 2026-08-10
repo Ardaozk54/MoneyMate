@@ -14,12 +14,12 @@ export function TransactionProvider({ children }) {
   const { user } = useAuth();
 
   const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadedUserId, setLoadedUserId] = useState(null);
+  const loading = Boolean(user && loadedUserId !== user.uid);
 
   async function loadTransactions() {
     if (!user) {
       setTransactions([]);
-      setLoading(false);
       return;
     }
 
@@ -30,7 +30,7 @@ export function TransactionProvider({ children }) {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setLoadedUserId(user.uid);
     }
   }
 
@@ -53,12 +53,40 @@ export function TransactionProvider({ children }) {
   }
 
   useEffect(() => {
-    if (user) {
-      loadTransactions();
-    } else {
-      setTransactions([]);
-      setLoading(false);
+    let ignore = false;
+
+    async function initializeTransactions() {
+      if (!user) {
+        await Promise.resolve();
+
+        if (!ignore) {
+          setTransactions([]);
+          setLoadedUserId(null);
+        }
+
+        return;
+      }
+
+      try {
+        const data = await getTransactions(user.uid);
+
+        if (!ignore) {
+          setTransactions(data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (!ignore) {
+          setLoadedUserId(user.uid);
+        }
+      }
     }
+
+    initializeTransactions();
+
+    return () => {
+      ignore = true;
+    };
   }, [user]);
   return (
     <TransactionContext.Provider

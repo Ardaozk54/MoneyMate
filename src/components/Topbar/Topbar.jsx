@@ -1,13 +1,16 @@
 import "./Topbar.css";
 
-import { Bell, Globe, Moon } from "lucide-react";
+import { Bell, Moon, Sun } from "lucide-react";
 
 import { useAuth } from "../../context/AuthContext";
+import { useSettings } from "../../context/SettingsContext";
+import LanguageMenu from "../Settings/LanguageMenu";
 
 function Topbar() {
   const { user } = useAuth();
+  const { theme, toggleTheme, t, locale } = useSettings();
 
-  const today = new Date().toLocaleDateString("en-US", {
+  const today = new Date().toLocaleDateString(locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -18,7 +21,7 @@ function Topbar() {
     <header className="topbar">
       <div className="topbar-left">
         <h1>
-          Welcome Back{" "}
+          {t("welcomeBack")}{" "}
           {user?.displayName ? `, ${user.displayName.split(" ")[0]}` : ""}
         </h1>
 
@@ -26,15 +29,23 @@ function Topbar() {
       </div>
 
       <div className="topbar-right">
-        <button className="topbar-btn">
-          <Globe size={18} />
+        <LanguageMenu />
+
+        <button
+          className="topbar-btn"
+          type="button"
+          aria-label={t("switchTheme")}
+          title={t(theme === "dark" ? "lightTheme" : "darkTheme")}
+          onClick={toggleTheme}
+        >
+          {theme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
         </button>
 
-        <button className="topbar-btn">
-          <Moon size={18} />
-        </button>
-
-        <button className="topbar-btn">
+        <button
+          className="topbar-btn"
+          type="button"
+          aria-label={t("notifications")}
+        >
           <Bell size={18} />
         </button>
       </div>

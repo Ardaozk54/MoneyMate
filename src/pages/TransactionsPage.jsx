@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FilterBar from "../components/Filters/FilterBar";
 import "./TransactionsPage.css";
 import TransactionList from "../components/Transaction/TransactionList";
@@ -7,16 +7,29 @@ import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useTransactions } from "../context/TransactionContext";
+import TransactionsSkeleton from "../components/Skeleton/TransactionsSkeleton";
+import { useSettings } from "../context/SettingsContext";
+import { categoryTranslationKeys } from "../i18n/translations";
 
 function TransactionsPage() {
   const { transactions, deleteTransaction, loading } = useTransactions();
+  const { t, locale } = useSettings();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedType, setSelectedType] = useState("ALL");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const navigate = useNavigate();
+
+  function updateFilter(setter, value) {
+    setter(value);
+    setCurrentPage(1);
+  }
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <TransactionsSkeleton />;
   }
+
   const filteredTransactions = transactions.filter((transaction) => {
     const matchesSearch = transaction.title
       .toLowerCase()
@@ -31,7 +44,6 @@ function TransactionsPage() {
     return matchesSearch && matchesCategory && matchesType;
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 5;
   const totalPages = Math.ceil(
     filteredTransactions.length / transactionsPerPage,
@@ -40,7 +52,6 @@ function TransactionsPage() {
   const endIndex = startIndex + transactionsPerPage;
   const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
 
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
   function handleDelete(id) {
     const transaction = transactions.find(
       (transaction) => transaction.id === id,
@@ -53,7 +64,7 @@ function TransactionsPage() {
     try {
       await deleteTransaction(selectedTransaction.id);
 
-      toast.success("Transaction deleted successfully!");
+      toast.success(t("transactionDeleted"));
 
       setSelectedTransaction(null);
     } catch (error) {
@@ -61,30 +72,26 @@ function TransactionsPage() {
     }
   }
 
-  const navigate = useNavigate();
-
   function handleEdit(id) {
     navigate(`/edit-transaction/${id}`);
   }
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, selectedType]);
-
   return (
     <main className="transactions-page">
       <section className="page-header">
-        <h1>Transactions</h1>
+        <h1>{t("transactions")}</h1>
 
-        <p> View and manage all your income and expenses. </p>
+        <p>{t("transactionsDescription")}</p>
       </section>
       <FilterBar
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        setSearchTerm={(value) => updateFilter(setSearchTerm, value)}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={(value) =>
+          updateFilter(setSelectedCategory, value)
+        }
         selectedType={selectedType}
-        setSelectedType={setSelectedType}
+        setSelectedType={(value) => updateFilter(setSelectedType, value)}
       />
 
       <section className="transactions-container">
@@ -105,30 +112,36 @@ function TransactionsPage() {
 
       {selectedTransaction && (
         <ConfirmationModal
-          title="Delete Transaction"
-          subtitle="This action cannot be undone."
-          warning="The selected transaction will be permanently removed."
-          confirmText="Delete"
+          title={t("deleteTransaction")}
+          subtitle={t("cannotUndo")}
+          warning={t("deleteWarning")}
+          confirmText={t("delete")}
           onConfirm={confirmDelete}
           onCancel={() => setSelectedTransaction(null)}
         >
           <div className="modal-row">
-            <span>Title</span>
+            <span>{t("title")}</span>
             <strong>{selectedTransaction.title}</strong>
           </div>
 
           <div className="modal-row">
-            <span>Category</span>
-            <strong>{selectedTransaction.category}</strong>
+            <span>{t("category")}</span>
+            <strong>
+              {categoryTranslationKeys[selectedTransaction.category]
+                ? t(categoryTranslationKeys[selectedTransaction.category])
+                : selectedTransaction.category}
+            </strong>
           </div>
 
           <div className="modal-row">
-            <span>Amount</span>
-            <strong>${selectedTransaction.amount.toLocaleString()}</strong>
+            <span>{t("amount")}</span>
+            <strong>
+              ${selectedTransaction.amount.toLocaleString(locale)}
+            </strong>
           </div>
 
           <div className="modal-row">
-            <span>Date</span>
+            <span>{t("date")}</span>
             <strong>{selectedTransaction.date}</strong>
           </div>
         </ConfirmationModal>

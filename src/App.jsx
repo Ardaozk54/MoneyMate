@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "sonner";
 
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
@@ -8,11 +9,12 @@ import TransactionsPage from "./pages/TransactionsPage";
 import AddTransactionPage from "./pages/AddTransactionPage";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import PublicRoute from "./components/Auth/PublicRoute";
-
-import { Toaster } from "sonner";
+import { useSettings } from "./context/SettingsContext";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function App() {
-  console.log("App çalıştı");
+  const { theme } = useSettings();
+
   return (
     <>
       <Routes>
@@ -25,13 +27,14 @@ function App() {
         >
           <Route path="/" element={<DashboardPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/add-transactions" element={<AddTransactionPage />} />
-
           <Route
             path="/edit-transaction/:id"
             element={<AddTransactionPage />}
           />
         </Route>
+
         <Route
           path="/login"
           element={
@@ -40,7 +43,6 @@ function App() {
             </PublicRoute>
           }
         />
-
         <Route
           path="/register"
           element={
@@ -51,7 +53,7 @@ function App() {
         />
       </Routes>
 
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="top-right" theme={theme} />
     </>
   );
 }

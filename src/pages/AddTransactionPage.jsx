@@ -13,6 +13,8 @@ import { useTransactions } from "../context/TransactionContext";
 
 import ConfirmationModal from "../components/Modal/ConfirmationModal";
 import TransactionPreview from "../components/Transaction/TransactionPreview";
+import { useSettings } from "../context/SettingsContext";
+import { categoryTranslationKeys } from "../i18n/translations";
 
 function AddTransactionPage() {
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ function AddTransactionPage() {
   const isEditMode = Boolean(id);
 
   const { transactions, addTransaction, updateTransaction } = useTransactions();
+  const { t } = useSettings();
 
   const [showModal, setShowModal] = useState(false);
   const [errors, setErrors] = useState({});
@@ -58,14 +61,14 @@ function AddTransactionPage() {
           amount: Number(formData.amount),
         });
 
-        toast.success("Transaction updated successfully!");
+        toast.success(t("transactionUpdated"));
       } else {
         await addTransaction({
           ...formData,
           amount: Number(formData.amount),
         });
 
-        toast.success("Transaction added successfully!");
+        toast.success(t("transactionAdded"));
       }
 
       setShowModal(false);
@@ -82,7 +85,7 @@ function AddTransactionPage() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const newErrors = validateTransaction(formData);
+    const newErrors = validateTransaction(formData, t);
 
     setErrors(newErrors);
 
@@ -96,22 +99,22 @@ function AddTransactionPage() {
       {isEditMode && (
         <Link to="/transactions" className="back-link">
           <ArrowLeft size={16} />
-          <span>Back to Transactions</span>
+          <span>{t("backToTransactions")}</span>
         </Link>
       )}
 
       <div className="form-container">
-        <h1>{isEditMode ? "Edit Transaction" : "Add Transaction"}</h1>
+        <h1>{isEditMode ? t("editTransaction") : t("addTransaction")}</h1>
 
         <p className="form-subtitle">
           {isEditMode
-            ? "Update your transaction details."
-            : "Keep your finances organized by adding a new transaction."}
+            ? t("editTransactionDescription")
+            : t("addTransactionDescription")}
         </p>
 
         <form className="transaction-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">{t("title")}</label>
 
             <input
               id="title"
@@ -127,7 +130,7 @@ function AddTransactionPage() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="category">Category</label>
+            <label htmlFor="category">{t("category")}</label>
 
             <select
               id="category"
@@ -136,11 +139,11 @@ function AddTransactionPage() {
               onChange={handleChange}
               className={errors.category ? "input-error" : ""}
             >
-              <option value="">Select Category</option>
+              <option value="">{t("selectCategory")}</option>
 
               {categories.map((category) => (
                 <option key={category.value} value={category.value}>
-                  {category.label}
+                  {t(categoryTranslationKeys[category.value])}
                 </option>
               ))}
             </select>
@@ -151,7 +154,7 @@ function AddTransactionPage() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">{t("amount")}</label>
 
             <div className="amount-input">
               <span>$</span>
@@ -171,7 +174,7 @@ function AddTransactionPage() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="type">Transaction Type</label>
+            <label htmlFor="type">{t("transactionType")}</label>
 
             <select
               id="type"
@@ -179,14 +182,14 @@ function AddTransactionPage() {
               value={formData.type}
               onChange={handleChange}
             >
-              <option value="expense">Expense</option>
+              <option value="expense">{t("expense")}</option>
 
-              <option value="income">Income</option>
+              <option value="income">{t("income")}</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="date">Date</label>
+            <label htmlFor="date">{t("date")}</label>
 
             <input
               id="date"
@@ -201,21 +204,19 @@ function AddTransactionPage() {
           </div>
 
           <button className="submit-btn" type="submit">
-            {isEditMode ? "Update Transaction" : "Add Transaction"}
+            {isEditMode ? t("updateTransaction") : t("addTransaction")}
           </button>
         </form>
       </div>
 
       {showModal && (
         <ConfirmationModal
-          title={isEditMode ? "Update Transaction" : "Confirm Transaction"}
-          subtitle="Please review the transaction details before confirming."
+          title={isEditMode ? t("updateTransaction") : t("confirmTransaction")}
+          subtitle={t("reviewTransaction")}
           warning={
-            isEditMode
-              ? "This transaction will be updated."
-              : "This transaction will be added to your finance history."
+            isEditMode ? t("transactionWillUpdate") : t("transactionWillAdd")
           }
-          confirmText={isEditMode ? "Update" : "Add Transaction"}
+          confirmText={isEditMode ? t("update") : t("addTransaction")}
           onConfirm={handleConfirm}
           onCancel={() => setShowModal(false)}
         >

@@ -1,6 +1,8 @@
 import "./TransactionItem.css";
 import { categories } from "../../constants/categories";
 import { Trash2, Pencil } from "lucide-react";
+import { useSettings } from "../../context/SettingsContext";
+import { categoryTranslationKeys } from "../../i18n/translations";
 
 function TransactionItem({
   title,
@@ -12,8 +14,12 @@ function TransactionItem({
   onDelete,
   onEdit,
 }) {
+  const { t, locale } = useSettings();
   const categoryLabel =
-    categories.find((c) => c.value === category)?.label || category;
+    (categoryTranslationKeys[category] &&
+      t(categoryTranslationKeys[category])) ||
+    categories.find((c) => c.value === category)?.label ||
+    category;
 
   return (
     <article className="transaction-item">
@@ -25,7 +31,7 @@ function TransactionItem({
 
       <div className="transaction-meta">
         <h3 className={`transaction-amount-${type}`}>
-          ${amount.toLocaleString("tr-TR")}
+          ${amount.toLocaleString(locale)}
         </h3>
 
         <p>{date}</p>
@@ -33,13 +39,21 @@ function TransactionItem({
 
       <div className="transaction-actions">
         {onEdit && (
-          <button className="edit-btn" onClick={() => onEdit(id)}>
+          <button
+            className="edit-btn"
+            aria-label={t("edit")}
+            onClick={() => onEdit(id)}
+          >
             <Pencil size={16} />
           </button>
         )}
 
         {onDelete && (
-          <button className="delete-btn" onClick={() => onDelete(id)}>
+          <button
+            className="delete-btn"
+            aria-label={t("delete")}
+            onClick={() => onDelete(id)}
+          >
             <Trash2 size={16} />
           </button>
         )}

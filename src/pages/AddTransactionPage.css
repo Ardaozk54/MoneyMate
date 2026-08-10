@@ -68,7 +68,7 @@
 
   transition: var(--transition);
 
-  background: white;
+  background: var(--background);
 
   color: var(--text);
 }
